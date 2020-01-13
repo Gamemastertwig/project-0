@@ -4,26 +4,34 @@ package main
 
 import (
 	"fmt"
-	"strings"
+
+	"github.com/project-0/npccreater"
 )
 
 type npc struct {
-	name   string
-	class  string
-	abiity []int
+	name    string
+	class   string
+	ability []int
 }
 
-var minion npc
+// Minion is a global verable storing a NPC stats
+var Minion npc
 
 func inti() {
-	minion.name = "Fred"
-	minion.class = "Unknown"
-	minion.ability = {0, 0, 0, 0, 0, 0}
+
+	//	a := []string{"warrior", "thief", "mage"}
+
+	//Minion.name = npccreater.RequestName("What is your name?")
+	//Minion.class = npccreater.RequestClass("What is your class?", a)
+	//minion.ability = {0, 0, 0, 0, 0, 0,}
 }
 
 // Main Function - This is where it all starts!
 func main() {
+	a := []string{"warrior", "thief", "mage"}
 
+	Minion.name = npccreater.RequestName("What is your name?")
+	Minion.class = npccreater.RequestClass("What is your class?", a)
 
-	fmt.Println(minion)
+	fmt.Println(Minion)
 }
