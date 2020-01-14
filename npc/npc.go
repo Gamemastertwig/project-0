@@ -1,5 +1,6 @@
-// Package npccreater is a Go Package for assiting in creating NPCs for RPGs
-package npccreater
+// Package npc is a Go Package the sudo-emulates a NPC classType, allows creations of NPCs
+// and includes methods for setting there values
+package npc
 
 import (
 	"fmt"
@@ -15,7 +16,7 @@ type Npc struct {
 }
 
 // Minion is a global variable that is a instance of Npc
-var Minion Npc
+// var Minion Npc
 
 // DefaultAbilities is a global variable that is a 2 diminsional (double) slice
 // to hold the default ability values for certain class types per D20PFSRD ruleset
@@ -32,48 +33,50 @@ func FillDefaultAbil() {
 	DefaultAbilities = append(DefaultAbilities, []int{10, 12, 11, 13, 8, 9}) // Skill
 }
 
-// SetRandomName takes a filename as a string and returns a random string from
-// the file. If file does not exist a error string will be returned. Names in
-// the file should be ordered in as one name per line.
-/* func SetRandomName(filename string) n string, err string {
-
-} */
-
 // SetSex sets Minion.Sex to the string passed to it
-func SetSex(sex string) {
-	Minion.Sex = sex
+func (m *Npc) SetSex(sex string) {
+	m.Sex = sex
 }
 
 // SetName sets Minion.Name to the string passed to it
-func SetName(name string) {
-	Minion.Name = name
+func (m *Npc) SetName(name string) {
+	m.Name = name
 }
 
 // SetClass sets Minion.Class to the string passed to it
-func SetClass(class string) {
-	Minion.Class = class
+func (m *Npc) SetClass(class string) {
+	m.Class = class
+}
+
+// SetStats sets Minion.Abilities to the slice of intigers passed to it.
+// NOTE: most RPGs have 6 stats (Strength (STR), Dexterity (DEX), Constitution (CON),
+// Intelligence (INT), Wisdom (WIS), and Charisma (CHA)). The slice allows for
+// additional stats to added based on play style.
+func (m *Npc) SetStats(stats []int) {
+	m.Abilities = stats
 }
 
 // SetDefaultStats sets Minion.Abilities to hold the default abilities based on
-// class type passed to it. Must equal one of the following strings or a non-nil
-// error (string) will be returned. Melee, Ranged, Divine, IArcane, CArcane, or Skill.
-func SetDefaultStats(classType string) {
+// class type passed to it. It calls FillDefaultAbil() and the string passed to
+// it must equal one of the following strings. Melee, Ranged, Divine, IArcane,
+// CArcane, or Skill.
+func (m *Npc) SetDefaultStats(classType string) {
 	// fill defaults first
 	FillDefaultAbil()
 	// assign abilities based on class type provided
 	switch strings.ToLower(classType) {
 	case "melee":
-		Minion.Abilities = DefaultAbilities[0]
+		m.Abilities = DefaultAbilities[0]
 	case "ranged":
-		Minion.Abilities = DefaultAbilities[1]
+		m.Abilities = DefaultAbilities[1]
 	case "divine":
-		Minion.Abilities = DefaultAbilities[2]
+		m.Abilities = DefaultAbilities[2]
 	case "iarcane":
-		Minion.Abilities = DefaultAbilities[3]
+		m.Abilities = DefaultAbilities[3]
 	case "carcane":
-		Minion.Abilities = DefaultAbilities[4]
+		m.Abilities = DefaultAbilities[4]
 	case "skill":
-		Minion.Abilities = DefaultAbilities[5]
+		m.Abilities = DefaultAbilities[5]
 	default:
 		fmt.Println("SetDefaultStats: No valid class type provided")
 	}
