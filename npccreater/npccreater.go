@@ -6,92 +6,75 @@ import (
 	"strings"
 )
 
-// RequestName takes a string (question), displays it to the user and returns
-// the response in the form a string
-func RequestName(question string) string {
-	var n string
-	fmt.Println(question) //output question
-	fmt.Scanln(&n)        //get answer
-	return n
+// Npc struct hold variable unique to ever NPC
+type Npc struct {
+	Sex       string
+	Name      string
+	Class     string
+	Abilities []int
 }
 
-// RandomName takes a filename as a string and returns a random string from
+// Minion is a global variable that is a instance of Npc
+var Minion Npc
+
+// DefaultAbilities is a global variable that is a 2 diminsional (double) slice
+// to hold the default ability values for certain class types per D20PFSRD ruleset
+var DefaultAbilities [][]int
+
+// FillDefaultAbil fill the DefaultAbilities variable with default values from the
+// D20PFSRD ruleset
+func FillDefaultAbil() {
+	DefaultAbilities = append(DefaultAbilities, []int{13, 11, 12, 9, 10, 8}) // Melee
+	DefaultAbilities = append(DefaultAbilities, []int{11, 13, 12, 10, 9, 8}) // Ranged
+	DefaultAbilities = append(DefaultAbilities, []int{10, 8, 12, 9, 13, 11}) // Divine
+	DefaultAbilities = append(DefaultAbilities, []int{8, 12, 10, 13, 9, 11}) // IArcane (INT)
+	DefaultAbilities = append(DefaultAbilities, []int{8, 12, 10, 11, 9, 13}) // IArcane (CHA)
+	DefaultAbilities = append(DefaultAbilities, []int{10, 12, 11, 13, 8, 9}) // Skill
+}
+
+// SetRandomName takes a filename as a string and returns a random string from
 // the file. If file does not exist a error string will be returned. Names in
 // the file should be ordered in as one name per line.
-/* func RandomName(filename string) n string, err string {
+/* func SetRandomName(filename string) n string, err string {
 
 } */
 
-// RequestClass takes a string (question) and an array of string (answers)
-// displays both to user and compaires the answer to answers, it will reask
-// the question if a valid answer is not found. To be more flexable if every
-// every answer in the answers array should start with a unique character.
-func RequestClass(question string, answers []string) string {
-	var answer string
-	a := false
-	for !a {
-		// display question
-		fmt.Println(question)
-		// display answers array
-		for i := 0; i < len(answers); i++ {
-			fmt.Println(answers[i])
-		}
-
-		fmt.Scan(&answer)
-
-		// check answer
-		for i := 0; i < len(answers); i++ {
-			if strings.ToLower(answers[i]) == strings.ToLower(answer) {
-				a = true
-				break
-			}
-		}
-
-		// failed
-		if !a {
-			fmt.Println("Invalid answer, try again...")
-		}
-
-	}
-
-	return answer
+// SetSex sets Minion.Sex to the string passed to it
+func SetSex(sex string) {
+	Minion.Sex = sex
 }
 
-// SetAbilities set the NPC ability states based on the class type chosen
-func setAbilities() {
-	/*
-		//placeholed will want to get this from a config file later (o its not hard coded)
-		allAbilities := [][]int{
-			{13, 11, 12, 9, 10, 8}, //Melee
-			{11, 13, 12, 10, 9, 8}, //Ranged
-			{10, 8, 12, 9, 13, 11}, //Divine
-			{8, 12, 10, 13, 9, 11}, //Arcane(INT)
-			{8, 12, 10, 11, 9, 13}, //Arcane(CHA)
-			{10, 12, 11, 13, 8, 9}, //Skill
-		}
+// SetName sets Minion.Name to the string passed to it
+func SetName(name string) {
+	Minion.Name = name
+}
 
-		currentClass := minion.class
-		var classInt int
+// SetClass sets Minion.Class to the string passed to it
+func SetClass(class string) {
+	Minion.Class = class
+}
 
-		// placeholder will need to get this from a config file later
-		switch currentClass {
-		case "Fighter":
-			classInt = 0
-		case "Archer":
-			classInt = 1
-		case "Healer":
-			classInt = 2
-		case "Sorcerer":
-			classInt = 3
-		case "Bard":
-			classInt = 4
-		case "Librarian":
-			classInt = 5
-		default:
-			fmt.Println("No valid class found!")
-		}
-
-		if classInt >= 0 && classInt < len(allAbilities[classInt]) {
-			minion.abiity = allAbilities[classInt]
-		} */
+// SetDefaultStats sets Minion.Abilities to hold the default abilities based on
+// class type passed to it. Must equal one of the following strings or a non-nil
+// error (string) will be returned. Melee, Ranged, Divine, IArcane, CArcane, or Skill.
+func SetDefaultStats(classType string) {
+	// fill defaults first
+	FillDefaultAbil()
+	// assign abilities based on class type provided
+	switch strings.ToLower(classType) {
+	case "melee":
+		Minion.Abilities = DefaultAbilities[0]
+	case "ranged":
+		Minion.Abilities = DefaultAbilities[1]
+	case "divine":
+		Minion.Abilities = DefaultAbilities[2]
+	case "iarcane":
+		Minion.Abilities = DefaultAbilities[3]
+	case "carcane":
+		Minion.Abilities = DefaultAbilities[4]
+	case "skill":
+		Minion.Abilities = DefaultAbilities[5]
+	default:
+		fmt.Println("SetDefaultStats: No valid class type provided")
+	}
 }
