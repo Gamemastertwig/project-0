@@ -1,4 +1,5 @@
 // Package userinputs is a collections of functions for requesting
+// information from the user
 package userinputs
 
 import (

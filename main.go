@@ -5,6 +5,7 @@ package main
 import (
 	"fmt"
 
+	"github.com/Gamemastertwig/project-0/fileinputs"
 	"github.com/Gamemastertwig/project-0/npc"
 )
 
@@ -20,7 +21,9 @@ func init() {
 
 // Main Function - This is where it all starts!
 func main() {
-	fmt.Println(minion)
+	//fmt.Println(minion)
+	content := fileinputs.SlicefromTXTFile("gName.txt")
+	fmt.Println(content)
 }
 
 // SetRandomName takes a filename as a string and returns a random string from
