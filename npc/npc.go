@@ -3,6 +3,7 @@
 package npc
 
 import (
+	"errors"
 	"fmt"
 	"strings"
 )
@@ -60,7 +61,7 @@ func (m *Npc) SetStats(stats []int) {
 // class type passed to it. It calls FillDefaultAbil() and the string passed to
 // it must equal one of the following strings. Melee, Ranged, Divine, IArcane,
 // CArcane, or Skill.
-func (m *Npc) SetDefaultStats(classType string) {
+func (m *Npc) SetDefaultStats(classType string) error {
 	// fill defaults first
 	FillDefaultAbil()
 	// assign abilities based on class type provided
@@ -78,6 +79,19 @@ func (m *Npc) SetDefaultStats(classType string) {
 	case "skill":
 		m.Abilities = DefaultAbilities[5]
 	default:
-		fmt.Println("SetDefaultStats: No valid class type provided")
+		return errors.New("SetDefaultStats: No valid class type provided")
+	}
+	return nil
+}
+
+// DisplayNpcBlock writes the NPC to
+func (m *Npc) DisplayNpcBlock() {
+	fmt.Printf("NPC:\n Sex: %s\n Name: %s\n", m.Sex, m.Name)
+	fmt.Printf(" Class: %s\n", m.Class)
+	if len(m.Abilities) == 6 {
+		fmt.Printf(" Abilities:\n  STR: %d\n  DEX: %d\n  CON: %d\n  INT: %d\n"+
+			"  WIS: %d\n  CHA: %d\n",
+			m.Abilities[0], m.Abilities[1], m.Abilities[2], m.Abilities[3],
+			m.Abilities[4], m.Abilities[5])
 	}
 }
