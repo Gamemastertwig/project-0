@@ -16,9 +16,6 @@ type Npc struct {
 	Abilities []int
 }
 
-// Minion is a global variable that is a instance of Npc
-// var Minion Npc
-
 // DefaultAbilities is a global variable that is a 2 diminsional (double) slice
 // to hold the default ability values for certain class types per D20PFSRD ruleset
 var DefaultAbilities [][]int
