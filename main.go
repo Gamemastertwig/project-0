@@ -5,9 +5,12 @@ package main
 import (
 	"flag"
 	"fmt"
+	"os"
 
+	"github.com/Gamemastertwig/project-0/fileinputs"
 	_ "github.com/Gamemastertwig/project-0/fileinputs"
 	"github.com/Gamemastertwig/project-0/npc"
+	"github.com/Gamemastertwig/project-0/randimizer"
 )
 
 var minion npc.Npc
@@ -28,8 +31,13 @@ func init() {
 	}
 
 	// testing variables
-	minion.SetSex("Male")
-	minion.SetName("Fred Smith")
+	minion.SetSex(randimizer.StringRandimizer([]string{"Male", "Female"}))
+	if minion.Sex == "Female" {
+		minion.SetName(randimizer.StringRandimizer(fileinputs.SliceFromTXTFile("gName.txt")))
+	} else {
+		minion.SetName(randimizer.StringRandimizer(fileinputs.SliceFromTXTFile("bName.txt")))
+	}
+
 	minion.SetClass("Fighter")
 	minion.SetDefaultStats("melee") // need error control here...
 	//minion.SetStats([]int{12, 12, 12, 12, 12, 12})
@@ -39,8 +47,9 @@ func init() {
 func main() {
 	if h {
 		help()
-		return
+		os.Exit(0)
 	}
+
 	minion.DisplayNpcBlock()
 	//fmt.Println(minion)
 	//content := fileinputs.SliceFromTXTFile("gName.txt")
@@ -65,10 +74,3 @@ func help() {
 	fmt.Printf("-random   Generates a fully random NPC using set defaults.\n")
 	fmt.Printf("-h, -help Displays this menu and exits the application\n")
 }
-
-// SetRandomName takes a filename as a string and returns a random string from
-// the file. If file does not exist a error string will be returned. Names in
-// the file should be ordered in as one name per line.
-/* func SetRandomName(filename string) n string, err string {
-
-} */

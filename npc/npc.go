@@ -50,17 +50,18 @@ func (m *Npc) SetClass(class string) {
 }
 
 // SetStats sets Minion.Abilities to the slice of intigers passed to it.
-// NOTE: most RPGs have 6 stats (Strength (STR), Dexterity (DEX), Constitution (CON),
-// Intelligence (INT), Wisdom (WIS), and Charisma (CHA)). The slice allows for
-// additional stats to added based on play style.
+// NOTE: most RPGs have 6 stats...
+// (Strength (STR), Dexterity (DEX), Constitution (CON), Intelligence (INT),
+// Wisdom (WIS), and Charisma (CHA)). The slice allows for additional stats
+// to be added based on play style.
 func (m *Npc) SetStats(stats []int) {
 	m.Abilities = stats
 }
 
-// SetDefaultStats sets Minion.Abilities to hold the default abilities based on
-// class type passed to it. It calls FillDefaultAbil() and the string passed to
-// it must equal one of the following strings. Melee, Ranged, Divine, IArcane,
-// CArcane, or Skill.
+// SetDefaultStats is a member function of the NPC struct that sets Abilities to
+// hold the default abilities based on class type passed to it.
+// It calls FillDefaultAbil() and the string passed to it must equal one of the
+// following strings. Melee, Ranged, Divine, IArcane, CArcane, or Skill.
 func (m *Npc) SetDefaultStats(classType string) error {
 	// fill defaults first
 	FillDefaultAbil()
