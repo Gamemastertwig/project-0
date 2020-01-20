@@ -3,7 +3,6 @@
 package fileinputs
 
 import (
-	"fmt"
 	"io/ioutil"
 	"strings"
 )
@@ -14,13 +13,15 @@ import (
 func SliceFromTXTFile(filename string) ([]string, error) {
 	// read ALL bytes from file into data ([]byte)
 	data, err := ioutil.ReadFile(filename)
+	var test []string
 	if err != nil {
-		fmt.Println("File reading error", err)
+		test = nil
+	} else {
+		// combinds content of file into one string
+		allDataString := string(data)
+		// seperates string into slices (string) per line
+		test = strings.Split(allDataString, "\n")
 	}
-	// combinds content of file into one string
-	allDataString := string(data)
-	// seperates string into slices (string) per line
-	test := strings.Split(allDataString, "\n")
-	// returns slices (string)
+	// returns slices (string) and error
 	return test, err
 }
