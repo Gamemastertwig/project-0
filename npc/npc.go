@@ -3,7 +3,6 @@
 package npc
 
 import (
-	"errors"
 	"fmt"
 	"strings"
 )
@@ -13,6 +12,7 @@ type Npc struct {
 	Sex       string
 	Name      string
 	Class     string
+	ClassType string
 	Abilities []int
 }
 
@@ -46,6 +46,11 @@ func (m *Npc) SetClass(class string) {
 	m.Class = class
 }
 
+// SetClassType sets Minion.ClassType to the string passed to it
+func (m *Npc) SetClassType(classType string) {
+	m.ClassType = classType
+}
+
 // SetStats sets Minion.Abilities to the slice of intigers passed to it.
 // NOTE: most RPGs have 6 stats...
 // (Strength (STR), Dexterity (DEX), Constitution (CON), Intelligence (INT),
@@ -59,7 +64,7 @@ func (m *Npc) SetStats(stats []int) {
 // hold the default abilities based on class type passed to it.
 // It calls FillDefaultAbil() and the string passed to it must equal one of the
 // following strings. Melee, Ranged, Divine, IArcane, CArcane, or Skill.
-func (m *Npc) SetDefaultStats(classType string) error {
+func (m *Npc) SetDefaultStats(classType string) {
 	// fill defaults first
 	FillDefaultAbil()
 	// assign abilities based on class type provided
@@ -77,9 +82,8 @@ func (m *Npc) SetDefaultStats(classType string) error {
 	case "skill":
 		m.Abilities = DefaultAbilities[5]
 	default:
-		return errors.New("SetDefaultStats: No valid class type provided")
+		m.Abilities = []int{10, 10, 10, 10, 10, 10}
 	}
-	return nil
 }
 
 // DisplayNpcBlock writes the NPC to
@@ -87,8 +91,7 @@ func (m *Npc) DisplayNpcBlock() {
 	fmt.Printf("NPC:\n Sex: %s\n Name: %s\n", m.Sex, m.Name)
 	fmt.Printf(" Class: %s\n", m.Class)
 	if len(m.Abilities) == 6 {
-		fmt.Printf(" Abilities:\n  STR: %d\n  DEX: %d\n  CON: %d\n  INT: %d\n"+
-			"  WIS: %d\n  CHA: %d\n",
+		fmt.Printf(" Abilities:\n  STR: %d DEX: %d CON: %d INT: %d WIS: %d CHA: %d\n",
 			m.Abilities[0], m.Abilities[1], m.Abilities[2], m.Abilities[3],
 			m.Abilities[4], m.Abilities[5])
 	}

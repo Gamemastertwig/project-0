@@ -1,6 +1,6 @@
 Fighter 
-Archer 
-Healer
-Sorcerer 
+Ranger 
+Healer 
+Sorcerer
 Bard 
 Librarian

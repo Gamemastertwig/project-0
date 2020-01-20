@@ -3,9 +3,7 @@
 package userinputs
 
 import (
-	"bufio"
 	"fmt"
-	"os"
 	"strconv"
 	"strings"
 )
@@ -14,10 +12,9 @@ import (
 // the response in the form of a string (answer)
 func RequestAnswer(question string) string {
 	var a string
-	r := bufio.NewReader(os.Stdin)
-	fmt.Println(question)     // output question
-	a, _ = r.ReadString('\n') // get answer
-	return a                  // return answer
+	fmt.Println(question) // output question
+	fmt.Scan(&a)          // get answer
+	return a              // return answer
 }
 
 // MultiChoiceAnswer takes a string (question) and an array of string (answers)

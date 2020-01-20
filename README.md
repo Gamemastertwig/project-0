@@ -2,16 +2,35 @@
 
 PROJECT-0 (NPCGEN) is a CLI application which will assist a player in creating a non-player role-playing characters for use in table top RPGs. Currently following D20PFSRD rules found at https://www.d20pfsrd.com/classes/npc-classes/Non-player-characters/
 
-## Plans
-- [x] Male or Female Character
-- [x] Get NPC name from user and display back
-    - [x] Get NPC name during runtime
-    - [x] Get NPC name from a flag
-    - [x] Get a random NPC name (names stored in a txt file, names from FINAL FANTASY TATICS found at http://dustin.wikidot.com/names)
-- [ ] Get NPC class from user and compare against allowed classes, return approved class
-    - [x] Get NPC class during runtime
-    - [ ] Get NPC class from a flag
-    - [ ] Get a randon NPC class
-- [x] Generate Abilities (STR, DEX, CON, INT, WIS, CHA) based on class chosen
-    - [ ] Pull data from a "config" file 
-- [ ] ... exspand as additional concepts are learned
+## Help Menu
+	This application is designed to help the user genrate basic NPCs.
+	The core is designed around the D20 Pathfinder ruleset but some
+	feature are available to allow for customization.
+	Using the application with no argument will allow the user to specify the
+	values based on answering prompts.
+	
+    -make     Generates a NPC using user defined variables.
+	          variables are in the following order: sex name class
+	          str dex con int wis cha
+	          If values are left off they will be randomized.
+	
+              example: -make Male Fred Fighter Melee 13 11 12 9 10 8
+	
+    -random   Generates a fully random NPC using set defaults. If followed by a
+	          value it will generate that many random NPCs
+	
+              example1: -random 5 || example2: -random
+	
+    -h, -help Displays this menu and exits the application\n")
+
+    To provide more random results please add the following text files to the 
+    same location as this application.
+
+    bName.txt -> Text file holding boy names for randomization, one name per line.
+    gName.txt -> Text file holding girl names for randomization, one name per line.
+    class.txt -> Text file holding class names for randomization, one name per line.
+    
+## Future Plans
+- [ ] Add way allow for creation and edit of text files
+- [ ] Web / GUI interface
+    
