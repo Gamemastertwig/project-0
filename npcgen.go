@@ -37,16 +37,16 @@ func init() {
 
 // Main Function - This is where it all starts!
 func main() {
-
 	// -h, -help
-	if h {
+	switch {
+	case h: // -h, -help
 		help()
 		os.Exit(0)
-	} else if r { // -random
+	case r: // -random
 		if len(mArgs) >= 1 {
 			count, err := strconv.Atoi(mArgs[0])
 			if err != nil {
-				fmt.Printf("value after -random is not an integer: %s\n", err)
+				fmt.Println("Value after -random is not an integer!")
 			} else {
 				wg.Add(count)
 				for i := 0; i < count; i++ {
@@ -57,41 +57,87 @@ func main() {
 			wg.Add(1)
 			go random()
 		}
-	} else if m { // -make
+	case m: // -make
 		custom()
-	} else { // default
+	default: // default operations
 		userRequest()
 	}
+
 	wg.Wait()
 }
 
 func userRequest() {
+	a := true
+	var str, dex, con, itl, wis, cha int
+	var err error
+
 	minion.SetSex(userinputs.RequestAnswer("What is your Gender?"))
 	minion.SetName(userinputs.RequestAnswer("What is your Name?"))
 	minion.SetClass(userinputs.RequestAnswer("What is Class?"))
-	str, err := strconv.Atoi(userinputs.RequestAnswer("What is your Strength?"))
-	if err != nil {
-		fmt.Printf("Invalid: non-numeric value provided for Strength\n")
+	for a {
+		str, err = strconv.Atoi(userinputs.RequestAnswer("What is your Strength?"))
+		if err != nil {
+			fmt.Printf("Invalid: non-numeric value provided for Strength\n")
+		} else if str < 0 {
+			fmt.Printf("Invalid: negative value provided for Strength\n")
+		} else {
+			a = false
+		}
 	}
-	dex, err := strconv.Atoi(userinputs.RequestAnswer("What is your Dexterity?"))
-	if err != nil {
-		fmt.Printf("Invalid: non-numeric value provided for Dexterity\n")
+	a = true
+	for a {
+		dex, err = strconv.Atoi(userinputs.RequestAnswer("What is your Dexterity?"))
+		if err != nil {
+			fmt.Printf("Invalid: non-numeric value provided for Dexterity\n")
+		} else if dex < 0 {
+			fmt.Printf("Invalid: negative value provided for Dexterity\n")
+		} else {
+			a = false
+		}
 	}
-	con, err := strconv.Atoi(userinputs.RequestAnswer("What is your Consitution?"))
-	if err != nil {
-		fmt.Printf("Invalid: non-numeric value provided for Consitution\n")
+	a = true
+	for a {
+		con, err = strconv.Atoi(userinputs.RequestAnswer("What is your Consitution?"))
+		if err != nil {
+			fmt.Printf("Invalid: non-numeric value provided for Consitution\n")
+		} else if con < 0 {
+			fmt.Printf("Invalid: negative value provided for Consitution\n")
+		} else {
+			a = false
+		}
 	}
-	itl, err := strconv.Atoi(userinputs.RequestAnswer("What is your Inteligence?"))
-	if err != nil {
-		fmt.Printf("Invalid: non-numeric value provided for Inteligence\n")
+	a = true
+	for a {
+		itl, err = strconv.Atoi(userinputs.RequestAnswer("What is your Inteligence?"))
+		if err != nil {
+			fmt.Printf("Invalid: non-numeric value provided for Inteligence\n")
+		} else if itl < 0 {
+			fmt.Printf("Invalid: negative value provided for Inteligence\n")
+		} else {
+			a = false
+		}
 	}
-	wis, err := strconv.Atoi(userinputs.RequestAnswer("What is your Wisdom?"))
-	if err != nil {
-		fmt.Printf("Invalid: non-numeric value provided for Wisdom\n")
+	a = true
+	for a {
+		wis, err = strconv.Atoi(userinputs.RequestAnswer("What is your Wisdom?"))
+		if err != nil {
+			fmt.Printf("Invalid: non-numeric value provided for Wisdom\n")
+		} else if wis < 0 {
+			fmt.Printf("Invalid: negative value provided for Wisdom\n")
+		} else {
+			a = false
+		}
 	}
-	cha, err := strconv.Atoi(userinputs.RequestAnswer("What is your Charisma?"))
-	if err != nil {
-		fmt.Printf("Invalid: non-numeric value provided for Charisma\n")
+	a = true
+	for a {
+		cha, err = strconv.Atoi(userinputs.RequestAnswer("What is your Charisma?"))
+		if err != nil {
+			fmt.Printf("Invalid: non-numeric value provided for Charisma\n")
+		} else if cha < 0 {
+			fmt.Printf("Invalid: negative value provided for Charisma\n")
+		} else {
+			a = false
+		}
 	}
 	minion.SetStats([]int{str, dex, con, itl, wis, cha})
 

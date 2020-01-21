@@ -86,7 +86,7 @@ func (m *Npc) SetDefaultStats(classType string) {
 	}
 }
 
-// DisplayNpcBlock writes the NPC to
+// DisplayNpcBlock writes the NPC to stdout in a readable format
 func (m *Npc) DisplayNpcBlock() {
 	fmt.Printf("NPC:\n Sex: %s\n Name: %s\n", m.Sex, m.Name)
 	fmt.Printf(" Class: %s\n", m.Class)
