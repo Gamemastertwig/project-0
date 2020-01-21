@@ -62,8 +62,6 @@ func TestMultiChoiceAnswer(t *testing.T) {
 func ExampleRequestAnswer() {
 	RequestAnswer("What is your name?")
 	// Output: What is your name?
-	// Input: Brandon
-	// Output: Brandon
 }
 
 func ExampleMultiChoiceAnswer() {
@@ -72,5 +70,4 @@ func ExampleMultiChoiceAnswer() {
 	// Output: 1 Thief
 	// Output: 2 Fighter
 	// Output: 3 Mage
-
 }

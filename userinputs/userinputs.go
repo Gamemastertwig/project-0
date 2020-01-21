@@ -54,7 +54,6 @@ func MultiChoiceAnswer(question string, answers []string) string {
 		if !answered {
 			fmt.Println("Invalid answer, try again...")
 		}
-
 	}
 
 	if answeredNum {
