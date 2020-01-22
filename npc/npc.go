@@ -31,7 +31,7 @@ func FillDefaultAbil() {
 	DefaultAbilities = append(DefaultAbilities, []int{10, 12, 11, 13, 8, 9}) // Skill
 }
 
-// SetSex sets Minion.Sex to the string passed to it
+// SetGender sets Minion.Gender to the string passed to it
 func (m *Npc) SetGender(gender string) {
 	m.Gender = gender
 }

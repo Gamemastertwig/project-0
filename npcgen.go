@@ -19,11 +19,13 @@ import (
 	"github.com/Gamemastertwig/project-0/npc"
 	"github.com/Gamemastertwig/project-0/randimizer"
 	"github.com/Gamemastertwig/project-0/userinputs"
+	"github.com/Gamemastertwig/project-0/webface"
 )
 
 var minion npc.Npc    // Npc
 var r bool            // random flag
 var m bool            // make flag
+var w bool            // web/http flag
 var h bool            // help flag
 var mArgs []string    // non-flag arguments from make flag
 var wg sync.WaitGroup // wait group for go routines
@@ -32,10 +34,11 @@ func init() {
 	// sets flag options
 	flag.BoolVar(&r, "random", false, "Generates a fully random NPC using set defaults") // random
 	flag.BoolVar(&m, "make", false, "Generates a NPC using user defined variables")      // make
+	flag.BoolVar(&w, "http", false, "Starts the HTTP web version")                       // http
 	flag.BoolVar(&h, "help", false, "Display help menu and exits application")           // help1
 	flag.BoolVar(&h, "h", false, "Display help menu and exits application")              // help2
 	flag.Parse()
-	if m || r {
+	if m || r || w {
 		mArgs = flag.Args()
 	}
 }
@@ -64,11 +67,25 @@ func main() {
 		}
 	case m: // -make
 		custom()
+	case w: // -http
+		web()
 	default: // default operations
 		userRequest()
 	}
 	//wait for any running go routines
 	wg.Wait()
+}
+
+func web() {
+	if len(mArgs) < 1 {
+		fmt.Println("Please provide port, Example: -http :8080")
+		os.Exit(0)
+	} else if len(mArgs) > 1 {
+		fmt.Println("Too many argments provided, Example: -http :8080")
+		os.Exit(0)
+	}
+	//fmt.Println(mArgs)
+	webface.StartHTTP(mArgs[0])
 }
 
 // userRequest (default) asked the user a series of questions to create a NPC to their liking

@@ -130,35 +130,3 @@ func TestDisplayNpcBlock(t *testing.T) {
 		t.Errorf("DisplayNpcBlock failed: Excpeted: %s", testString)
 	}
 }
-
-func ExampleFillDefaultAbil() {
-
-}
-
-func ExampleSetSex() {
-
-}
-
-func ExampleSetName() {
-
-}
-
-func ExampleSetClass() {
-
-}
-
-func ExampleSetClassType() {
-
-}
-
-func ExampleSetStats() {
-
-}
-
-func ExampleSetDefaultStats() {
-
-}
-
-func ExampleDisplayNpcBlock() {
-
-}
