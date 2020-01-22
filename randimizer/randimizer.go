@@ -1,4 +1,4 @@
-// Package randimizer is a gis a collections of functions for randimizing groups of data
+// Package randimizer is a collections of functions for randimizing groups of data
 package randimizer
 
 import (
