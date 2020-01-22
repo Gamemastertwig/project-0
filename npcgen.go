@@ -1,5 +1,8 @@
-// Project-O
-// Character Generator
+// Project-O (NPCGEN) is a CLI application which will assist a player
+// in creating a non-player role-playing characters for use in table
+// top RPGs.
+
+// Revature: Brandon Locker (GameMasterTwig)
 package main
 
 import (
@@ -17,11 +20,11 @@ import (
 
 var minion npc.Npc
 
-var r bool         // random flag
-var m bool         // make flag
-var h bool         // help flag
-var mArgs []string // non-flag arguments from make flag
-var wg sync.WaitGroup
+var r bool            // random flag
+var m bool            // make flag
+var h bool            // help flag
+var mArgs []string    // non-flag arguments from make flag
+var wg sync.WaitGroup // wait group for go routines
 
 func init() {
 	// sets flag options
@@ -48,7 +51,7 @@ func main() {
 			if err != nil {
 				fmt.Println("Value after -random is not an integer!")
 			} else {
-				wg.Add(count)
+				wg.Add(count) // add the nuber of go routines to wait group
 				for i := 0; i < count; i++ {
 					go random() // run all on seperate go routines
 				}
@@ -62,16 +65,17 @@ func main() {
 	default: // default operations
 		userRequest()
 	}
-
+	//wait for any running go routines
 	wg.Wait()
 }
 
+// userRequest (default) asked the user a series of questions to create a NPC to their liking
 func userRequest() {
 	a := true
 	var str, dex, con, itl, wis, cha int
 	var err error
 
-	minion.SetSex(userinputs.RequestAnswer("What is your Gender?"))
+	minion.SetGender(userinputs.RequestAnswer("What is your Gender?"))
 	minion.SetName(userinputs.RequestAnswer("What is your Name?"))
 	minion.SetClass(userinputs.RequestAnswer("What is Class?"))
 	for a {
@@ -140,10 +144,11 @@ func userRequest() {
 		}
 	}
 	minion.SetStats([]int{str, dex, con, itl, wis, cha})
-
+	// display NPC
 	minion.DisplayNpcBlock()
 }
 
+// help (-h, -help) displays a help menu to the user to help with use
 func help() {
 	// displays "hardcoded" help menu
 	fmt.Printf("This application is designed to help the user genrate basic NPCs.\n")
@@ -167,15 +172,16 @@ func help() {
 	fmt.Printf("class.txt -> Text file holding class names for randomization, one class per line.\n\n")
 }
 
+// random (-random) randomly creates NPC based on files if files not present uses
+// hard coded defaults
 func random() {
 	defer wg.Done()
-	// set random values based on files if files not present uses hard coded defaults
-	var sex, name, class, classType string
-	sex = randimizer.StringRandimizer([]string{"Male", "Female"})
-	minion.SetSex(sex)
 
-	// set random name based on sex
-	if minion.Sex == "Female" {
+	var gender, name, class, classType string
+	gender = randimizer.StringRandimizer([]string{"Male", "Female"})
+	minion.SetGender(gender)
+	// set random name based on gender
+	if minion.Gender == "Female" {
 		names, err := fileinputs.SliceFromTXTFile("gName.txt") // use gName file
 		if err != nil {                                        // if file not present use defaults
 			name = randimizer.StringRandimizer([]string{"Jane", "Mary", "Susan"})
@@ -191,7 +197,6 @@ func random() {
 		}
 	}
 	minion.SetName(name)
-
 	// set random class
 	classes, err := fileinputs.SliceFromTXTFile("class.txt")
 	if err != nil {
@@ -200,37 +205,36 @@ func random() {
 		class = randimizer.StringRandimizer(classes)
 	}
 	minion.SetClass(class)
-
 	// set random class type NOTE: need to work out a way to link this to classes
 	classType = randimizer.StringRandimizer([]string{"Melee", "Ranged",
 		"Divine", "IArcane", "CArcane", "Skill"})
 	minion.SetDefaultStats(classType) // need error control here...
-
+	// display NPC
 	minion.DisplayNpcBlock()
 }
 
+// custom sets up a NPC based inputs passed to the application using arguments else
+// else it will generate a randon value based on what is missing
 func custom() {
-	var sex, name, class string
-	// sex from user as argument else random
-	if len(mArgs) >= 1 { // is sex present?
-		sex = mArgs[0]
+	var gender, name, class string
+	// gender from user as argument else random
+	if len(mArgs) >= 1 { // is gender present?
+		gender = mArgs[0]
 	} else {
-		sex = randimizer.StringRandimizer([]string{"Male", "Female"})
+		gender = randimizer.StringRandimizer([]string{"Male", "Female"})
 	}
-	minion.SetSex(sex)
-
-	// name from user as argument else random based on sex
+	minion.SetGender(gender)
+	// name from user as argument else random based on gender
 	if len(mArgs) >= 2 { // is name present?
 		name = mArgs[1]
 	} else {
-		if minion.Sex == "Female" {
+		if minion.Gender == "Female" {
 			name = randimizer.StringRandimizer([]string{"Jane", "Mary", "Susan"})
 		} else {
 			name = randimizer.StringRandimizer([]string{"John", "Gary", "Richard"})
 		}
 	}
 	minion.SetName(name)
-
 	// class from user as argument else random
 	if len(mArgs) >= 3 { // is class present?
 		class = mArgs[2]
@@ -238,7 +242,6 @@ func custom() {
 		class = randimizer.StringRandimizer([]string{"Fighter", "Ranger", "Cleric"})
 	}
 	minion.SetClass(class)
-
 	// abilities from user as argument else random based on class type
 	if len(mArgs) >= 9 { // are abilities present?
 		var abilities []int
@@ -254,6 +257,6 @@ func custom() {
 		minion.SetClassType(classType)
 		minion.SetDefaultStats(minion.ClassType)
 	}
-
+	// display NPC
 	minion.DisplayNpcBlock()
 }

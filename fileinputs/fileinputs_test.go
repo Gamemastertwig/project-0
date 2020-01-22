@@ -13,21 +13,17 @@ func TestSliceFromTXTFile(t *testing.T) {
 	if err != nil {
 		log.Fatal(err)
 	}
-
 	// fill it with content (weekdays)
 	if _, err := file.WriteString("Monday\nTuesday\nWednesday\nThursday\nFriday"); err != nil {
 		log.Fatal(err)
 	}
-
 	// close file
 	file.Close()
-
 	// test function
 	temp, err := SliceFromTXTFile("test.txt")
 	if err != nil {
 		log.Fatal(err)
 	}
-
 	// verify function
 	if temp == nil {
 		t.Errorf("SliceFromTXTFile failed: Excpeted: [Monday Tuesday Wednesday Thursday Friday]")
@@ -39,7 +35,6 @@ func TestSliceFromTXTFile(t *testing.T) {
 			}
 		}
 	}
-
 	// remove temp file
 	err = os.Remove("test.txt") // cleanup
 	if err != nil {
@@ -47,19 +42,17 @@ func TestSliceFromTXTFile(t *testing.T) {
 	}
 }
 
+// test.txt
+//  Monday
+//  Tuesday
+//  Wednesday
+//  Thursday
+//  Friday
 func ExampleSliceFromTXTFile() {
-	// test.txt
-	//  Monday
-	//  Tuesday
-	//  Wednesday
-	//  Thursday
-	//  Friday
-
 	lines, err := SliceFromTXTFile("test.txt")
 	if err != nil {
 		log.Fatal(err)
 	}
 	fmt.Println(lines)
-
 	// Output: [Monday Tuesday Wednesday Thursday Friday]
 }

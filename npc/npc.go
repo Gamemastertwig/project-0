@@ -9,7 +9,7 @@ import (
 
 // Npc struct hold variable unique to ever NPC
 type Npc struct {
-	Sex       string
+	Gender    string
 	Name      string
 	Class     string
 	ClassType string
@@ -32,8 +32,8 @@ func FillDefaultAbil() {
 }
 
 // SetSex sets Minion.Sex to the string passed to it
-func (m *Npc) SetSex(sex string) {
-	m.Sex = sex
+func (m *Npc) SetGender(gender string) {
+	m.Gender = gender
 }
 
 // SetName sets Minion.Name to the string passed to it
@@ -88,7 +88,7 @@ func (m *Npc) SetDefaultStats(classType string) {
 
 // DisplayNpcBlock writes the NPC to stdout in a readable format
 func (m *Npc) DisplayNpcBlock() {
-	fmt.Printf("NPC:\n Sex: %s\n Name: %s\n", m.Sex, m.Name)
+	fmt.Printf("NPC:\n Gender: %s\n Name: %s\n", m.Gender, m.Name)
 	fmt.Printf(" Class: %s\n", m.Class)
 	if len(m.Abilities) == 6 {
 		fmt.Printf(" Abilities:\n  STR: %d DEX: %d CON: %d INT: %d WIS: %d CHA: %d\n",
