@@ -22,9 +22,9 @@ func TestStringRandimizer(t *testing.T) {
 	}
 }
 
+// output can be Morning, Evening, or Night
 func ExampleStringRandimizer() {
 	testStringSlice := []string{"Morning", "Evening", "Night"}
 	temp := StringRandimizer(testStringSlice)
 	fmt.Println(temp)
-	// Output: Morning || Evening || Night
 }

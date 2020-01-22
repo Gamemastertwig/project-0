@@ -10,7 +10,7 @@ import (
 // random string from it.
 func StringRandimizer(inputs []string) string {
 	var l, n int
-	// seed rand based on time
+	// seed rand based on time per OS
 	rand.Seed(time.Now().UnixNano())
 	// get a random int from 0 to length of string slice -1
 	l = len(inputs)

@@ -2,57 +2,33 @@ package fileinputs
 
 import (
 	"fmt"
-	"log"
-	"os"
 	"testing"
 )
 
-func TestSliceFromTXTFile(t *testing.T) {
-	// create temp file
-	file, err := os.Create("test.txt")
-	if err != nil {
-		log.Fatal(err)
-	}
-	// fill it with content (weekdays)
-	if _, err := file.WriteString("Monday\nTuesday\nWednesday\nThursday\nFriday"); err != nil {
-		log.Fatal(err)
-	}
-	// close file
-	file.Close()
+func TestSliceFromByte(t *testing.T) {
+	// create tempByte file
+	tempByte := []byte("Monday\nTuesday\nWednesday\nThursday\nFriday")
+
 	// test function
-	temp, err := SliceFromTXTFile("test.txt")
-	if err != nil {
-		log.Fatal(err)
-	}
+	temp := SliceFromByte(tempByte)
+
 	// verify function
 	if temp == nil {
-		t.Errorf("SliceFromTXTFile failed: Excpeted: [Monday Tuesday Wednesday Thursday Friday]")
+		t.Errorf("SliceFromByte failed: Excpeted: [Monday Tuesday Wednesday Thursday Friday]")
 	} else {
 		temp2 := []string{"Monday", "Tuesday", "Wednesday", "Thursday", "Friday"}
 		for i := range temp {
 			if temp2[i] != temp[i] {
-				t.Errorf("SliceFromTXTFile failed: Excpeted: %s", temp2[i])
+				t.Errorf("SliceFromByte failed: Excpeted: %s", temp2[i])
 			}
 		}
 	}
-	// remove temp file
-	err = os.Remove("test.txt") // cleanup
-	if err != nil {
-		log.Fatal(err)
-	}
 }
 
-// test.txt
-//  Monday
-//  Tuesday
-//  Wednesday
-//  Thursday
-//  Friday
-func ExampleSliceFromTXTFile() {
-	lines, err := SliceFromTXTFile("test.txt")
-	if err != nil {
-		log.Fatal(err)
-	}
+func ExampleSliceFromByte() {
+	tempByte := []byte("Monday\nTuesday\nWednesday\nThursday\nFriday")
+	lines := SliceFromByte(tempByte)
+
 	fmt.Println(lines)
 	// Output: [Monday Tuesday Wednesday Thursday Friday]
 }

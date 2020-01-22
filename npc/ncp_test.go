@@ -95,43 +95,37 @@ func TestDisplayNpcBlock(t *testing.T) {
 	n.SetClassType("Skill")
 	n.SetStats([]int{10, 12, 11, 13, 8, 9})
 
-	// ack up Stdout
+	// back up Stdout
 	oldStdout := os.Stdout
 	defer func() { os.Stdout = oldStdout }()
-
 	// create writer to fake Stdout
 	read, out, err := os.Pipe()
 	if err != nil {
 		log.Fatal(err)
 	}
-
 	// set writer to Stdout
 	os.Stdout = out
-
 	// run function to test, and capture Stdout
 	n.DisplayNpcBlock()
-
 	// need to close out here, otherwise ReadAll never gets "EOF".
 	err = out.Close()
 	if err != nil {
 		log.Fatal(err)
 	}
-
 	// read from captured fake Stdout
 	content, err := ioutil.ReadAll(read)
 	if err != nil {
 		log.Fatal(err)
 	}
-
 	// close reader
 	err = read.Close()
 	if err != nil {
 		log.Fatal(err)
 	}
-
+	// exspected output
 	testString := "NPC:\n Gender: Alien\n Name: Fred\n Class: Teacher\n" +
 		" Abilities:\n  STR: 10 DEX: 12 CON: 11 INT: 13 WIS: 8 CHA: 9\n"
-
+	// compair output to exspected
 	if testString != string(content) {
 		t.Errorf("DisplayNpcBlock failed: Excpeted: %s", testString)
 	}

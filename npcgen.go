@@ -184,27 +184,27 @@ func random() {
 	minion.SetGender(gender)
 	// set random name based on gender
 	if minion.Gender == "Female" {
-		names, err := fileinputs.SliceFromTXTFile("gName.txt") // use gName file
-		if err != nil {                                        // if file not present use defaults
+		names, err := fileinputs.ReadFile("gName.txt") // use gName file
+		if err != nil {                                // if file not present use defaults
 			name = randimizer.StringRandimizer([]string{"Jane", "Mary", "Susan"})
 		} else {
-			name = randimizer.StringRandimizer(names)
+			name = randimizer.StringRandimizer(fileinputs.SliceFromByte(names))
 		}
 	} else {
-		names, err := fileinputs.SliceFromTXTFile("bName.txt") // use bName file
-		if err != nil {                                        // if file not present use defaults
+		names, err := fileinputs.ReadFile("bName.txt") // use bName file
+		if err != nil {                                // if file not present use defaults
 			name = randimizer.StringRandimizer([]string{"John", "Gary", "Richard"})
 		} else {
-			name = randimizer.StringRandimizer(names)
+			name = randimizer.StringRandimizer(fileinputs.SliceFromByte(names))
 		}
 	}
 	minion.SetName(name)
 	// set random class
-	classes, err := fileinputs.SliceFromTXTFile("class.txt")
+	classes, err := fileinputs.ReadFile("class.txt")
 	if err != nil {
 		class = randimizer.StringRandimizer([]string{"Fighter", "Ranger", "Cleric"})
 	} else {
-		class = randimizer.StringRandimizer(classes)
+		class = randimizer.StringRandimizer(fileinputs.SliceFromByte(classes))
 	}
 	minion.SetClass(class)
 	// set random class type NOTE: need to work out a way to link this to classes

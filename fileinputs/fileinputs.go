@@ -7,21 +7,19 @@ import (
 	"strings"
 )
 
-// SliceFromTXTFile reads the text file with the filename (string) and
-// returns a slice (string) holding all data from text file seperated by
-// a newline ("\n")
-func SliceFromTXTFile(filename string) ([]string, error) {
-	// read ALL bytes from file into data ([]byte)
+// SliceFromByte reads the data ([]byte) and returns a slice (string) holding
+// all values from data ([]byte) that is seperated by a newline ("\n")
+func SliceFromByte(data []byte) []string {
+	// combinds content of data into one string
+	allDataString := string(data)
+	// seperates string into slices (string) per line
+	test := strings.Split(allDataString, "\n")
+	// returns slices (string)
+	return test
+}
+
+// ReadFile is a wrapper for ioutil.ReadFile
+func ReadFile(filename string) ([]byte, error) {
 	data, err := ioutil.ReadFile(filename)
-	var test []string
-	if err != nil {
-		test = nil
-	} else {
-		// combinds content of file into one string
-		allDataString := string(data)
-		// seperates string into slices (string) per line
-		test = strings.Split(allDataString, "\n")
-	}
-	// returns slices (string) and error
-	return test, err
+	return data, err
 }
