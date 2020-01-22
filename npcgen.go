@@ -1,7 +1,6 @@
 // Project-O (NPCGEN) is a CLI application which will assist a player
 // in creating a non-player role-playing characters for use in table
 // top RPGs.
-
 // Revature: Brandon Locker (GameMasterTwig)
 package main
 
@@ -18,8 +17,7 @@ import (
 	"github.com/Gamemastertwig/project-0/userinputs"
 )
 
-var minion npc.Npc
-
+var minion npc.Npc    // Npc
 var r bool            // random flag
 var m bool            // make flag
 var h bool            // help flag
