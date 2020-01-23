@@ -1,8 +1,26 @@
+<html>
+<head></head>
+<body>
 <h1>NPCGEN (WEB)</h1>
     
 <h2>Creating NPC(s)</h2>
 
 <form action="/display/" method="POST">
-<div><textarea name="body" rows="20" cols="80"> {{printf "%s" .Body}}</textarea></div>
-<div><input type="submit" value="Display"></div>
+    Gender:<br>
+    <input type="radio" name="gender" value="male" checked> Male<br>
+    <input type="radio" name="gender" value="female"> Female<br>
+    Name:<br>
+    <input type="text" name="name"><br>
+    Class:<br>
+    <input type="text" name="class"><br>
+    Class Type:<br>
+    <select> // for loop in html template example
+        {{range $key, $value := .}}
+          <option value="{{ $value }}">{{ $key }}</option>
+        {{end}}     
+    </select>
+    <input type="submit" value="Display">
+
 </form>
+</body>
+</html>
